@@ -1,91 +1,34 @@
 package Main;
 import Main.Models.Booking;
-import Main.Models.Services.Impl.Heap;
+import Main.Models.Services.Impl.MaxHeap;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Heap employee = new Heap();
+        MaxHeap bookingHeap = new MaxHeap(10);
 
-        while(true){
-            System.out.println("\n-----Employee Management System-----");
-            System.out.println("1. Add Employee");
-            System.out.println("2. Remove Employee by Email or Contact");
-            System.out.println("3. Search Employee by Email, Contact, or Name");
-            System.out.println("4. Display All Employees");
-            System.out.println("5. Generate Salary Slip by Email or Contact");
-            System.out.println("6. Update Employee Salary by Email or Contact");
-            System.out.println("7. Exit");
-            System.out.print("Enter your choice: ");
+        System.out.println("Booking flight system: ");
+        Booking firstBooking = new Booking(101, 200, 4);
+        Booking secondBooking = new Booking(102, 450, 5);
+        Booking thirdBooking = new Booking(103, 650, 2 );
+        Booking fourthBooking = new Booking(104, 850, 1);
+        Booking fifthBooking = new Booking(105, 120, 2);
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+        System.out.println("Inserting the bookings: ");
+        bookingHeap.insert(firstBooking);
+        bookingHeap.insert(secondBooking);
+        bookingHeap.insert(thirdBooking);
+        bookingHeap.insert(fourthBooking);
+        bookingHeap.insert(fifthBooking);
 
-            switch (choice){
-                case 1:
-                    System.out.print("Enter Name: ");
-                    String name = scanner.nextLine();
-                    System.out.print("Enter Email: ");
-                    String email = scanner.nextLine();
-                    System.out.print("Enter Address: ");
-                    String address = scanner.nextLine();
-                    System.out.print("Enter Contact: ");
-                    String contact = scanner.nextLine();
-                    System.out.print("Enter Salary: ");
-                    double salary = scanner.nextDouble();
-                    scanner.nextLine();
-                    System.out.print("Enter Province: ");
-                    String province = scanner.nextLine();
 
-                    employee.addEmployee(new Booking(name, email, address, contact, salary, province));
-                    break;
+        System.out.println("Deleting Booking according to priority: ");
+        bookingHeap.deleteMax();
+        bookingHeap.deleteMax();
+        bookingHeap.deleteMax();
 
-                case 2:
-                    System.out.print("Enter Email or Contact of Employee to Remove: ");
-                    String identifier = scanner.nextLine();
-                    employee.removeEmployee(identifier);
-                    break;
-
-                case 3:
-                    System.out.print("Enter Email, Contact, or Name to Search: ");
-                    String searchKey = scanner.nextLine();
-                    Booking foundEmployee = employee.searchEmployees(searchKey);
-                    if (foundEmployee != null) {
-                        System.out.println("Employee Found: " + foundEmployee.getName());
-                    } else {
-                        System.out.println("Employee Not Found.");
-                    }
-                    break;
-
-                case 4:
-                    employee.displayAllEmployees();
-                    break;
-
-                case 5:
-                    System.out.println("Enter email or contact for salary Slip: ");
-                    String SalaryEmployee = scanner.nextLine();
-                    employee.generateSalarySLip(SalaryEmployee);
-                    break;
-
-                case 6:
-                    System.out.println("Enter Email or contact to update the salary: ");
-                    String UpdateSalary = scanner.nextLine();
-                    System.out.println("Enter the new salary to update: ");
-                    double newSalary = scanner.nextDouble();
-                    employee.updateSalary(UpdateSalary, newSalary);
-                    break;
-
-                case 7:
-                    System.out.println("Thank you for using our system...Bye....");
-                    scanner.close();
-                    System.exit(0);
-                    break;
-
-                default:
-                    System.out.println("Invalid Choice. Please Try Again.");
-            }
-        }
+        System.out.println("Final state of the Heap: ");
+        bookingHeap.display();
     }
-}
+        }
